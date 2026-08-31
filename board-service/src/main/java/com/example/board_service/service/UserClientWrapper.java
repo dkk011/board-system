@@ -5,6 +5,7 @@ import com.example.board_service.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @Component
 @RequiredArgsConstructor
