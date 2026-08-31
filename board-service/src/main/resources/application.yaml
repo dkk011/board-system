@@ -19,3 +19,12 @@ eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      user-service:                     # Circuit Breaker 이름
+        sliding-window-size: 5          # 최근 5번의 호출을 기준으로 판단
+        failure-rate-threshold: 50      # 실패율 50% 이상이면 OPEN
+        wait-duration-in-open-state: 30s  # OPEN 상태에서 30초 대기 후 HALF-OPEN
+        permitted-number-of-calls-in-half-open-state: 3  # HALF-OPEN에서 3번 시도

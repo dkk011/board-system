@@ -20,6 +20,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final UserClient userClient;
+    private final UserClientWrapper userClientWrapper;
 
     // 게시글 작성
     @Transactional
@@ -44,7 +45,7 @@ public class PostService {
 
         return posts.stream()
                 .map(post -> {
-                    UserDto user = userClient.getUser(post.getUserId());
+                    UserDto user = userClientWrapper.getUser(post.getUserId());
                     return PostResponseDto.from(post, user);
                 })
                 .collect(Collectors.toList());
@@ -55,7 +56,7 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
 
-        UserDto user = userClient.getUser(post.getUserId());
+        UserDto user = userClientWrapper.getUser(post.getUserId());
 
         return PostResponseDto.from(post, user);
     }
